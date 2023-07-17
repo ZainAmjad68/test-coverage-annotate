@@ -19,6 +19,10 @@ Toolkit.run(async (tools) => {
     let prData = await getDiffWithLineNumbers('HEAD^1');
     tools.log(`PR Data ${prData}`);
 
+    const coverageReportPath = core.getInput('coverage-info-path');
+    let coverageJSON = await coverageReportToJs(coverageReportPath);
+    tools.log(`Coverage Data ${coverageJSON}`);
+
   } catch (error) {
     tools.exit.failure(error.message);
   }
