@@ -1,0 +1,22 @@
+name: 'PR Coverage Annotate'
+description: 'Scan the Changes in a PR and Use the Coverage Report to display coverage related annotations'
+inputs:
+  token:
+    description: 'GitHub Token to access the Repo'
+    required: true
+  coverage-info-path:
+    description: 'Path to the LCOV Info file'
+    default: './coverage/lcov.info'
+    required: false
+  annotation-type:
+    description: 'if Coverage Annotations should be on top of each file or in-line'
+    default: 'summarize' # or detailed
+    required: false
+  annotation-coverage:
+    description: 'Aspects of the Coverage Report to Annotate'
+    default: 'all' # or line/function/branch
+    required: false
+
+runs:
+  using: 'node16'
+  main: 'index.js'
