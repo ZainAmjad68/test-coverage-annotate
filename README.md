@@ -1,4 +1,4 @@
-# PR Coverage Annotate - GitHub Action
+# Test Coverage Annotate - GitHub Action
 
 This action Scans the Changes in a PR and then uses the provided Coverage Report to display Annotations about the uncovered parts of the code
 
@@ -26,7 +26,7 @@ This action Scans the Changes in a PR and then uses the provided Coverage Report
 ## Example usage
 
 ```yaml
-uses: ZainAmjad68/pr-coverage-annotate@0.8
+uses: ZainAmjad68/test-coverage-annotate@0.8
 with:
   token: ${{ secrets.GITHUB_TOKEN }}
 ```
