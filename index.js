@@ -32,17 +32,28 @@ Toolkit.run(async (tools) => {
     console.log(`******* Coverage Data ********`);
     coverageJSON.forEach((fileCoverage) => {
       console.log('--------------');
+      console.log('**Filename**: ', fileCoverage.file);
+      console.log('Title: ', fileCoverage.file);
       console.log(fileCoverage);
       if (fileCoverage.functions && fileCoverage.functions.details) {
-        console.log(fileCoverage.functions);
+        console.log('fileCoverage.functions.found: ' ,fileCoverage.functions.found);
+        console.log('fileCoverage.functions.hit: ',fileCoverage.functions.hit);
         fileCoverage.functions.details.forEach((detail) => {
           console.log(`fileCoverage.functions.details: `, detail);
         });
       }
       if (fileCoverage.lines && fileCoverage.lines.details) {
-        console.log(fileCoverage.lines);
+        console.log('fileCoverage.lines.found: ' ,fileCoverage.lines.found);
+        console.log('fileCoverage.lines.hit: ',fileCoverage.lines.hit);
         fileCoverage.lines.details.forEach((detail) => {
           console.log(`fileCoverage.lines.details: `, detail);
+        });
+      }
+      if (fileCoverage.branches && fileCoverage.branches.details) {
+        console.log('fileCoverage.branches.found: ' ,fileCoverage.branches.found);
+        console.log('fileCoverage.branches.hit: ',fileCoverage.branches.hit);
+        fileCoverage.branches.details.forEach((detail) => {
+          console.log(`fileCoverage.branches.details: `, detail);
         });
       }
       console.log('--------------');
