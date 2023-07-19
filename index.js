@@ -17,11 +17,38 @@ Toolkit.run(async (tools) => {
     });
 
     let prData = await getDiffWithLineNumbers('HEAD^1');
-    tools.log(`PR Data ${prData}`);
+    tools.log(`******* PR Data ********`);
+    prData.forEach((fileData) => {
+      tools.log('--------------');
+      tools.log(`File: ${fileData.fileName}`);
+      tools.log(`File Data: ${fileData.data}`);
+      fileData.data.forEach((lineData) => {
+        tools.log(`Line ${lineData.lineNumber}:`, lineData.line);
+      });
+      tools.log('--------------');
+    });
 
     const coverageReportPath = core.getInput('coverage-info-path');
     let coverageJSON = await coverageReportToJs(coverageReportPath);
-    tools.log(`Coverage Data ${coverageJSON}`);
+    tools.log(`******* Coverage Data ********`);
+    coverageJSON.forEach((fileCoverage) => {
+      tools.log('--------------');
+      tools.log(fileCoverage.title);
+      tools.log(fileCoverage.file);
+      if (fileCoverage.functions && fileCoverage.functions.details) {
+        tools.log(fileCoverage.functions);
+        fileCoverage.functions.details.forEach((detail, detailIndex) => {
+          tools.log(`Detail ${detailIndex + 1}:`, detail);
+        });
+      }
+      if (fileCoverage.lines && fileCoverage.lines.details) {
+        tools.log(fileCoverage.lines);
+        fileCoverage.lines.details.forEach((detail, detailIndex) => {
+          tools.log(`Detail ${detailIndex + 1}:`, detail);
+        });
+      }
+      tools.log('--------------');
+    });
 
   } catch (error) {
     tools.exit.failure(error.message);
