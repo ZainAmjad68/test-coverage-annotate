@@ -17,37 +17,35 @@ Toolkit.run(async (tools) => {
     });
 
     let prData = await getDiffWithLineNumbers('HEAD^1');
-    tools.log(`******* PR Data ********`);
+    console.log(`******* PR Data ********`);
     prData.forEach((fileData) => {
-      tools.log('--------------');
-      tools.log(`File: ${fileData.fileName}`);
-      tools.log(`File Data: ${fileData.data}`);
+      console.log('--------------');
+      console.log(`File: ${fileData.fileName}`);
       fileData.data.forEach((lineData) => {
-        tools.log(`Line ${lineData.lineNumber}:`, lineData.line);
+        console.log(lineData);
       });
-      tools.log('--------------');
+      console.log('--------------');
     });
 
     const coverageReportPath = core.getInput('coverage-info-path');
     let coverageJSON = await coverageReportToJs(coverageReportPath);
-    tools.log(`******* Coverage Data ********`);
+    console.log(`******* Coverage Data ********`);
     coverageJSON.forEach((fileCoverage) => {
-      tools.log('--------------');
-      tools.log(fileCoverage.title);
-      tools.log(fileCoverage.file);
+      console.log('--------------');
+      console.log(fileCoverage);
       if (fileCoverage.functions && fileCoverage.functions.details) {
-        tools.log(fileCoverage.functions);
-        fileCoverage.functions.details.forEach((detail, detailIndex) => {
-          tools.log(`Detail ${detailIndex + 1}:`, detail);
+        console.log(fileCoverage.functions);
+        fileCoverage.functions.details.forEach((detail) => {
+          console.log(`fileCoverage.functions.details: `, detail);
         });
       }
       if (fileCoverage.lines && fileCoverage.lines.details) {
-        tools.log(fileCoverage.lines);
-        fileCoverage.lines.details.forEach((detail, detailIndex) => {
-          tools.log(`Detail ${detailIndex + 1}:`, detail);
+        console.log(fileCoverage.lines);
+        fileCoverage.lines.details.forEach((detail) => {
+          console.log(`fileCoverage.lines.details: `, detail);
         });
       }
-      tools.log('--------------');
+      console.log('--------------');
     });
 
   } catch (error) {

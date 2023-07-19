@@ -7,11 +7,8 @@ function getDiffWithLineNumbers(baseBranch) {
         reject(error);
         return;
       }
-
-      console.log("stdout: ", stdout);
       let files = stdout.split("\n");
       files.pop();
-      console.log("files: ", files);
       let prData = [];
       for (const file of files) {
         const regex = /\+([^\n]+)/g;
