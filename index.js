@@ -4,6 +4,7 @@ const fetch = require("node-fetch");
 const {Toolkit} = require('actions-toolkit');
 const getDiffWithLineNumbers = require('./git_diff');
 const coverageReportToJs = require('./lcov-to-json');
+const findUncoveredCodeInPR = require('./analyze');
 
 const GITHUB_WORKSPACE = process.env.GITHUB_WORKSPACE;
 
@@ -29,15 +30,15 @@ Toolkit.run(async (tools) => {
 
     const coverageReportPath = core.getInput('coverage-info-path');
     let coverageJSON = await coverageReportToJs(coverageReportPath);
+    // let untestedLines = await findUncoveredCodeInPR(prData, coverageJSON);
     console.log(`******* Coverage Data ********`);
     coverageJSON.forEach((fileCoverage) => {
       console.log('--------------');
-      console.log('**Filename**: ', fileCoverage.file);
-      console.log('Title: ', fileCoverage.file);
-      console.log(fileCoverage);
+      console.log('Filename: ', fileCoverage.file);
+      console.log('Title: ', fileCoverage.title);
       if (fileCoverage.functions && fileCoverage.functions.details) {
-        console.log('fileCoverage.functions.found: ' ,fileCoverage.functions.found);
-        console.log('fileCoverage.functions.hit: ',fileCoverage.functions.hit);
+        console.log('fileCoverage.functions.found: ', fileCoverage.functions.found);
+        console.log('fileCoverage.functions.hit: ', fileCoverage.functions.hit);
         fileCoverage.functions.details.forEach((detail) => {
           console.log(`fileCoverage.functions.details: `, detail);
         });
