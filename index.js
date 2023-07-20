@@ -4,7 +4,7 @@ const fetch = require("node-fetch");
 const {Toolkit} = require('actions-toolkit');
 const getDiffWithLineNumbers = require('./git_diff');
 const coverageReportToJs = require('./lcov-to-json');
-const findUncoveredCodeInPR = require('./analyze');
+// const findUncoveredCodeInPR = require('./analyze');
 
 const GITHUB_WORKSPACE = process.env.GITHUB_WORKSPACE;
 
