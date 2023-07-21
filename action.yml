@@ -8,11 +8,11 @@ inputs:
     description: 'Path to the LCOV Info file'
     default: './coverage/lcov.info'
     required: false
-  annotation-type:
+  annotation-coverage:
     description: 'if Coverage Annotations should be on top of each file or in-line'
     default: 'summarize' # or detailed
     required: false
-  annotation-coverage:
+  annotation-type:
     description: 'Aspects of the Coverage Report to Annotate'
     default: 'all' # or line/function/branch
     required: false
