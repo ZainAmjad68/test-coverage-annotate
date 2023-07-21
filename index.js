@@ -58,7 +58,7 @@ Toolkit.run(async (tools) => {
       updateData['output'].summary = `:::Found a Total of ${totalWarnings} Instances of Uncovered Code in ${totalFiles} Files!:::`;
     }
     await createOrUpdateCheck(updateData, 'update', tools);
-    console.log(`Check Successfully Updated`, checkData);
+    console.log(`Check Successfully Updated`);
 
     // finally close the Check
     let completeData = {
@@ -69,7 +69,7 @@ Toolkit.run(async (tools) => {
     completeData = { ...updateData, ...completeData };
     delete completeData['output'].annotations;
     await createOrUpdateCheck(completeData, 'update', tools);
-    console.log(`Check Successfully Closed`, checkData);
+    console.log(`Check Successfully Closed`);
 
     /*
     console.log(`******* PR Data ********`);
