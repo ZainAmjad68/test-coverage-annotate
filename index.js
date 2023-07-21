@@ -35,7 +35,7 @@ Toolkit.run(async (tools) => {
     const coverageReportPath = core.getInput('coverage-info-path');
     let coverageJSON = await coverageReportToJs(coverageReportPath);
 
-    const typesToCover = core.getInput('annotation-type');
+    let typesToCover = core.getInput('annotation-type');
     typesToCover = typesToCover.split(',').map(item => item.trim());
     
     let untestedLinesOfFiles = await findUncoveredCodeInPR(prData, coverageJSON, typesToCover);
