@@ -4,9 +4,9 @@ const fetch = require("node-fetch");
 const {Toolkit} = require('actions-toolkit');
 const getDiffWithLineNumbers = require('./git_diff');
 const coverageReportToJs = require('./lcov-to-json');
-// const findUncoveredCodeInPR = require('./analyze');
-
-const GITHUB_WORKSPACE = process.env.GITHUB_WORKSPACE;
+const findUncoveredCodeInPR = require('./analyze');
+const createAnnotations = require('./annotations');
+const createOrUpdateCheck = require('./check-run');
 
 Toolkit.run(async (tools) => {
   try {
@@ -17,7 +17,61 @@ Toolkit.run(async (tools) => {
       request: {fetch}
     });
 
+    const tools = new Toolkit({
+      token: githubToken,
+    });
+
+    let createData = {
+      started_at: new Date().toISOString(),
+      status: 'in_progress',
+      name: 'Test Coverage Annotate',
+    };
+    const response = await createOrUpdateCheck(createData, 'create', tools);
+    let check_id = response.data.id;
+    console.log(`Check Successfully Created`, check_id);
+
     let prData = await getDiffWithLineNumbers('HEAD^1');
+
+    const coverageReportPath = core.getInput('coverage-info-path');
+    let coverageJSON = await coverageReportToJs(coverageReportPath);
+
+    const typesToCover = core.getInput('annotation-type');
+    typesToCover = typesToCover.split(',').map(item => item.trim());
+    
+    let untestedLinesOfFiles = await findUncoveredCodeInPR(prData, coverageJSON, typesToCover);
+    // Create appropriate annotations for uncovered code in files changed by the pull request and not covered with tests
+    const coverage = core.getInput('annotation-coverage');
+    const annotations = createAnnotations(untestedLinesOfFiles, coverage);
+    let totalFiles = Object.keys(untestedLinesOfFiles).length;
+    let totalWarnings = annotations.length;
+
+    let updateData = {
+      check_run_id: check_id,
+      output: {
+        title: 'Test Coverage Annotate',
+        annotations: annotations
+      }
+    };
+    if (!annotations.length) {
+      updateData['output'].summary = 'All Good! We found No Uncovered Lines of Code in your Pull Request.';
+    } else {
+      updateData['output'].summary = `:::Found a Total of ${totalWarnings} Instances of Uncovered Code in ${totalFiles} Files!:::`;
+    }
+    await createOrUpdateCheck(updateData, 'update', tools);
+    console.log(`Check Successfully Updated`, checkData);
+
+    // finally close the Check
+    let completeData = {
+      conclusion: 'success',
+      status: 'completed',
+      completed_at: new Date().toISOString()
+    }
+    completeData = { ...updateData, ...completeData };
+    delete completeData['output'].annotations;
+    await createOrUpdateCheck(completeData, 'update', tools);
+    console.log(`Check Successfully Closed`, checkData);
+
+    /*
     console.log(`******* PR Data ********`);
     prData.forEach((fileData) => {
       console.log('--------------');
@@ -27,10 +81,7 @@ Toolkit.run(async (tools) => {
       });
       console.log('--------------');
     });
-
-    const coverageReportPath = core.getInput('coverage-info-path');
-    let coverageJSON = await coverageReportToJs(coverageReportPath);
-    // let untestedLines = await findUncoveredCodeInPR(prData, coverageJSON);
+    
     console.log(`******* Coverage Data ********`);
     coverageJSON.forEach((fileCoverage) => {
       console.log('--------------');
@@ -59,6 +110,7 @@ Toolkit.run(async (tools) => {
       }
       console.log('--------------');
     });
+    */
 
   } catch (error) {
     tools.exit.failure(error.message);
