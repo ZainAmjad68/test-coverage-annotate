@@ -47,8 +47,8 @@ function createAnnotations(uncoveredData, coverageType) {
             const filePathTrimmed = file.replace(`${GITHUB_WORKSPACE}/`, '');
             annotations.push({
                 path: filePathTrimmed,
-                start_line: 0,
-                end_line: 0,
+                start_line: 1,
+                end_line: 1,
                 annotation_level: 'warning',
                 title: `** Summary of Uncovered Code **`,
                 message: message
