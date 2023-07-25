@@ -1,5 +1,4 @@
-async function createOrUpdateCheck(data, checkType, tools) {
-    let PR = tools.context.payload.pull_request;
+async function createOrUpdateCheck(data, checkType, tools, PR) {
     let defaultCheckAttributes = {
         owner: tools.context.repo.owner,
         repo: tools.context.repo.repo,

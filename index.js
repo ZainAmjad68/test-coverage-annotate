@@ -26,7 +26,22 @@ Toolkit.run(async (tools) => {
       status: 'in_progress',
       name: 'Test Coverage Annotate',
     };
-    const response = await createOrUpdateCheck(createData, 'create', tools);
+
+    const eventType = core.getInput('action-type');
+    console.log('eventType:', eventType);
+    let PR;
+    if (eventType === 'workflow_dispatch') {
+      PR = await octokit.pulls.get({
+        owner: tools.context.repo.owner,
+        repo: tools.context.repo.repo,
+        pull_number: tools.context.payload.inputs.pr_number,
+      });
+      PR = PR.data;
+    } else {
+      PR = tools.context.payload.pull_request;
+    };
+
+    const response = await createOrUpdateCheck(createData, 'create', tools, PR);
     let check_id = response.data.id;
     console.log(`Check Successfully Created`, check_id);
 
@@ -57,7 +72,7 @@ Toolkit.run(async (tools) => {
     } else {
       updateData['output'].summary = `:::Found a Total of ${totalWarnings} Instances of Uncovered Code in ${totalFiles} Files!:::`;
     }
-    await createOrUpdateCheck(updateData, 'update', tools);
+    await createOrUpdateCheck(updateData, 'update', tools, PR);
     console.log(`Check Successfully Updated`);
 
     // finally close the Check
@@ -68,7 +83,7 @@ Toolkit.run(async (tools) => {
     }
     completeData = { ...updateData, ...completeData };
     delete completeData['output'].annotations;
-    await createOrUpdateCheck(completeData, 'update', tools);
+    await createOrUpdateCheck(completeData, 'update', tools, PR);
     console.log(`Check Successfully Closed`);
 
     /*

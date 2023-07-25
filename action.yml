@@ -8,6 +8,10 @@ inputs:
     description: 'Path to the LCOV Info file'
     default: './coverage/lcov.info'
     required: false
+  action-type:
+    description: 'The WorkFlow Event that invoked this Action'
+    default: 'workflow_dispatch'
+    required: false
   annotation-coverage:
     description: 'if Coverage Annotations should be on top of each file or in-line'
     default: 'summarize' # or detailed
