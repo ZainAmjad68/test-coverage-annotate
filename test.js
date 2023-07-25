@@ -1,5 +1,6 @@
 const findUncoveredCodeInPR = require('./analyze');
 const createAnnotations = require('./annotations');
+const coverageReportToJs = require('./lcov-to-json');
 
 var parse = require('lcov-parse');
 
@@ -333,5 +334,8 @@ const prData = [
       console.log('Annotations: ', annotations);
 
     });
+
+    let parsed = await coverageReportToJs('./lcov.info');
+    console.log('parsed data: ', parsed);
 
 })();
