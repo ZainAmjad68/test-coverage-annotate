@@ -13,12 +13,17 @@ This action Scans the Changes in a PR and then uses the provided Coverage Report
 **Optional** Path of the Coverage Report
 **Default** './coverage/lcov.info'
 
-### `annotation-type`
+### `action-type`
+
+**Optional** Specifies the WorkFlow Event that invoked this Action
+**Default** 'workflow_dispatch'
+
+### `annotation-coverage`
 
 **Optional** Specifies whether the Coverage Annotations should be displayed on top of each file as a Summary (`summarize`) or in-line ((`detailed`))
 **Default** 'summarize'
 
-### `annotation-coverage`
+### `annotation-type`
 
 **Optional** Aspects of the Coverage Report to Annotate. These can be lines/functions/branches
 **Default** 'all'
