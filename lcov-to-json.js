@@ -9,7 +9,7 @@ const crypto = require('crypto');
  * @param reportFile path to the Coverage Report file or URL
  * @returns Promise containing the parsed data
  */
-async function coverageReportToJs(reportFile) {
+async function coverageReportToJs(reportFile, noOfCoverageFiles) {
   if (isURL(reportFile)) {
     try {
       const content = await fetchContentFromURL(reportFile);

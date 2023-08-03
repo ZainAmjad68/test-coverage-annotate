@@ -8,6 +8,10 @@ inputs:
     description: 'Path to the LCOV Info file'
     default: './coverage/lcov.info'
     required: false
+  total-coverage-files:
+    description: 'Total Number of Coverage Files to process'
+    default: '1'
+    required: false
   action-type:
     description: 'The WorkFlow Event that invoked this Action'
     default: 'workflow_dispatch'

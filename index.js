@@ -48,7 +48,9 @@ Toolkit.run(async (tools) => {
     let prData = await getDiffWithLineNumbers('HEAD^1');
 
     const coverageReportPath = core.getInput('coverage-info-path');
-    let coverageJSON = await coverageReportToJs(coverageReportPath);
+    const noOfCoverageFiles = core.getInput('total-coverage-files');
+
+    let coverageJSON = await coverageReportToJs(coverageReportPath, noOfCoverageFiles);
 
     let typesToCover = core.getInput('annotation-type');
     typesToCover = typesToCover.split(',').map(item => item.trim());
