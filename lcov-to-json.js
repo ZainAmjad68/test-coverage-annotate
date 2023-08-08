@@ -80,7 +80,7 @@ function fetchContentFromURL(url) {
 
 function executeLcovResultMerger(inputPattern, outputFilePath) {
   return new Promise((resolve, reject) => {
-    const command = `./node_modules/.bin/lcov-result-merger '${inputPattern}' '${outputFilePath}'`;
+    const command = `npx lcov-result-merger '${inputPattern}' '${outputFilePath}'`;
     console.log('command: ', command);
     exec(command, (error, stdout, stderr) => {
       if (error) {
