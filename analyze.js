@@ -75,10 +75,10 @@ function findUncoveredCodeInPR(prData, coverageJSON, typesToCover) {
         let fileName = file.fileName;
         const fileCoverage = coverageJSON.find(coverageFile => coverageFile['file'] === fileName);
         if (!fileCoverage) {
-            //console.log(`File ${fileName} Not Found in Coverage.`);
+            console.log(`File ${fileName} Not Found in Coverage Data.`);
             return;
         }
-        console.log(`File ${fileName} Was Actually Found in Coverage!!`);
+        console.log(`File ${fileName} was found in Coverage Data!!`);
 
         console.log('Data: ', file.data);
         filesWithMatches[fileName] = [];
