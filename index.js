@@ -57,22 +57,30 @@ Toolkit.run(async (tools) => {
     
     let untestedLinesOfFiles = await findUncoveredCodeInPR(prData, coverageJSON, typesToCover);
     // Create appropriate annotations for uncovered code in files changed by the pull request and not covered with tests
-    const coverage = core.getInput('annotation-coverage');
-    const annotations = createAnnotations(untestedLinesOfFiles, coverage);
+    const coverageType = core.getInput('annotation-coverage');
+    const annotations = createAnnotations(untestedLinesOfFiles, coverageType);
     let totalFiles = Object.keys(untestedLinesOfFiles).length;
     let totalWarnings = annotations.length;
 
     let updateData = {
       check_run_id: check_id,
       output: {
-        title: 'Test Coverage Annotate',
+        title: 'Test Coverage Annotate🔎',
         annotations: annotations
       }
     };
     if (!annotations.length) {
-      updateData['output'].summary = 'All Good! We found No Uncovered Lines of Code in your Pull Request.';
+      updateData['output'].summary = 'All Good! We found No Uncovered Lines of Code in your Pull Request.🚀';
     } else {
-      updateData['output'].summary = `:::Found a Total of ${totalWarnings} Instances of Uncovered Code in ${totalFiles} Files!:::`;
+      let summary = `### Found a Total of ${totalWarnings} Instances of Uncovered Code in ${totalFiles} Files!⚠️
+      
+      File Name | No. of Warnings
+      --------- | ---------------
+      `;
+      Object.entries(untestedLinesOfFiles).forEach(([filename, untestedStuffArray]) => {
+        summary += `${filename} | ${untestedStuffArray.length}\n`
+      });
+      updateData['output'].summary = summary;
     }
     await createOrUpdateCheck(updateData, 'update', tools, PR);
     console.log(`Check Successfully Updated`);
