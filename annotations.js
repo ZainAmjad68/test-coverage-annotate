@@ -65,6 +65,7 @@ function createAnnotations(uncoveredData, coverageType) {
                         end_line: annotation.lineNumber,
                         annotation_level: 'error',
                         title: `${pluralToSingularMap[annotation.annotationType]} not covered!`,
+                        message: ''
                     })
                 });
             }
