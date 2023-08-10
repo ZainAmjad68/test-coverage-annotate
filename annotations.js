@@ -49,7 +49,7 @@ function createAnnotations(uncoveredData, coverageType) {
                 path: filePathTrimmed,
                 start_line: 1,
                 end_line: 1,
-                annotation_level: 'warning',
+                annotation_level: 'error',
                 title: `** Summary of Uncovered Code **`,
                 message: message
             })
@@ -63,9 +63,8 @@ function createAnnotations(uncoveredData, coverageType) {
                         path: filePathTrimmed,
                         start_line: annotation.lineNumber,
                         end_line: annotation.lineNumber,
-                        annotation_level: 'warning',
-                        title: `!!!Uncovered ${annotation.annotationType} Found!!!`,
-                        message: `This ${pluralToSingularMap[annotation.annotationType]} is not covered by any of the Tests.`
+                        annotation_level: 'error',
+                        title: `${pluralToSingularMap[annotation.annotationType]} not covered!`,
                     })
                 });
             }
