@@ -1,41 +1,60 @@
 # Test Coverage Annotate - GitHub Action
 
-This action Scans the Changes in a PR and then uses the provided Coverage Report to display Annotations about the uncovered parts of the code
+A GitHub Action that enhances your code review process by providing visual insights into test coverage directly on your pull requests.
 
-## Inputs
+<p align="center">
+  <img src="https://drive.google.com/uc?export=view&id=1DHTAmEK5i5e4h1TGOcJ7hwQXaYUshuQF" alt="Test Coverage Annotate Logo">
+</p>
 
-### `token`
+## :mag: Overview
 
-**Required** The Token required to access the Pull Request (PR) using GitHub APIs
+Test Coverage Annotate is a powerful GitHub Action that scans the changes in a pull request and utilizes the provided coverage report to display annotations on the PR, highlighting uncovered parts of the code. This allows developers and reviewers to quickly identify areas with insufficient test coverage and take appropriate actions.
 
-### `coverage-info-path`
+## :bulb: Features
 
-**Optional** Path of the Coverage Report
+- Seamlessly integrates into your pull request workflow.
+- Provides actionable insights into code coverage.
+- Customizable annotation style: choose between summarized or detailed annotations.
+- Flexible annotation types: focus on lines, functions, or branches that need attention.
+- Easy-to-use configuration with sensible defaults.
 
-**Default** './coverage/lcov.info'
+## :gear: Configuration
 
-### `action-type`
+### Inputs
 
-**Optional** Specifies the WorkFlow Event that invoked this Action
+### `token` (required)
 
-**Default** 'workflow_dispatch'
+The access token required to interact with the GitHub API for fetching pull request details.
 
-### `annotation-coverage`
+### `coverage-info-path` (optional)
 
-**Optional** Specifies whether the Coverage Annotations should be displayed on top of each file as a Summary (`summarize`) or in-line (`detailed`)
+The path to the coverage report file. This defaults to './coverage/lcov.info'.
 
-**Default** 'summarize'
+### `annotation-coverage` (optional)
 
-### `annotation-type`
+Specifies the style of coverage annotations to display:
+- `summarize`: Show a summary annotation on each file.
+- `detailed`: Display line-level annotations directly in the code.
 
-**Optional** Aspects of the Coverage Report to Annotate. These can be lines/functions/branches
+Defaults to 'summarize'.
 
-**Default** 'all'
+### `annotation-type` (optional)
 
-## Example usage
+The type of coverage aspects to annotate:
+- `lines`: Annotate uncovered lines.
+- `functions`: Annotate uncovered functions.
+- `branches`: Annotate uncovered branches.
+- `all`: Annotate all of the above aspects.
+
+Defaults to 'all'.
+
+## :rocket: Example Usage
 
 ```yaml
-uses: ZainAmjad68/test-coverage-annotate@0.8
+uses: your-username/test-coverage-annotate@v0.8
 with:
   token: ${{ secrets.GITHUB_TOKEN }}
+  coverage-info-path: './coverage/lcov.info'
+  annotation-coverage: 'detailed'
+  annotation-type: 'all'
 ```
