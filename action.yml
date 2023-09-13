@@ -14,7 +14,7 @@ inputs:
     required: false
   action-type:
     description: 'The WorkFlow Event that invoked this Action'
-    default: 'workflow_dispatch'
+    default: 'pull request'
     required: false
   annotation-coverage:
     description: 'if Coverage Annotations should be on top of each file or in-line'
