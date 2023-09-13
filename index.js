@@ -66,7 +66,6 @@ Toolkit.run(async (tools) => {
       check_run_id: check_id,
       output: {
         title: 'Test Coverage Annotate🔎',
-        annotations: annotations
       }
     };
     if (!annotations.length) {
@@ -81,9 +80,15 @@ Toolkit.run(async (tools) => {
         summary += `${filename} | ${untestedStuffArray.length}\n`
       });
       updateData['output'].summary = summary;
-    }
-    await createOrUpdateCheck(updateData, 'update', tools, PR);
-    console.log(`Check Successfully Updated`);
+    };
+
+    let leftAnnotations = [...annotations];
+    while (leftAnnotations.length > 0) {
+      let toProcess = leftAnnotations.splice(0, 50);
+      updateData.output.annotations = toProcess;
+      await createOrUpdateCheck(updateData, 'update', tools, PR);
+      console.log(`Check Successfully Updated.`);
+    };
 
     // finally close the Check
     let completeData = {
