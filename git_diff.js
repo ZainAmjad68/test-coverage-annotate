@@ -24,7 +24,7 @@ function getDiffWithLineNumbers(baseBranch) {
         allChangedLines = allChangedLines.trim();
 
         let linesNos = execSync(
-          `git diff --unified=0 ${baseBranch} -- ${file} | grep -e '^@@' | awk -F'@@' '{print $2}'`
+          `git diff --unified=0 ${baseBranch} --ignore-all-space ${file} | grep -e '^@@' | awk -F'@@' '{print $2}'`
         ).toString();
         linesNos = linesNos.trim();
         let matches = linesNos.match(regex).map((match) => match.substring(1));
