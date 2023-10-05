@@ -3,7 +3,7 @@
 A GitHub Action that enhances your code review process by providing visual insights into test coverage directly on your pull requests.
 
 <p align="center">
-  <img src="https://drive.google.com/uc?export=view&id=1DHTAmEK5i5e4h1TGOcJ7hwQXaYUshuQF" alt="Test Coverage Annotate Logo">
+  <img width="739" alt="test-coverage-annotate" src="https://github.com/ZainAmjad68/test-coverage-annotate/assets/53145353/dd63374d-9251-4010-817d-c0eb17f4875d">
 </p>
 
 ## :mag: Overview
