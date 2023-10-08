@@ -50,6 +50,8 @@ Defaults to 'all'.
 
 ## :rocket: Example Usage
 
+To integrate test coverage annotations into your GitHub Actions workflow, you can use the `test-coverage-annotate` action like this:
+
 ```yaml
 uses: your-username/test-coverage-annotate@v0.8
 with:
@@ -58,3 +60,5 @@ with:
   annotation-coverage: 'detailed'
   annotation-type: 'all'
 ```
+
+**Note:** If you are using [actions/checkout](https://github.com/actions/checkout) in your workflow, make sure you add the `fetch-depth: 0` parameter. This is necessary for the tool to access the coverage file properly.
