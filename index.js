@@ -71,17 +71,15 @@ Toolkit.run(async (tools) => {
     if (!annotations.length) {
       updateData['output'].summary = 'All Good! We found No Uncovered Lines of Code in your Pull Request.🚀';
     } else {
-      let summary = `### Found a Total of ${totalWarnings} Instances of Uncovered Code in ${totalFiles} Files!⚠️
-      
-      File Name | No. of Warnings
-      --------- | ---------------
-      `;
+      let summary = `### Found a Total of ${totalWarnings} Instances of Uncovered Code in ${totalFiles} Files!⚠️\n\n`;
+      summary += 'File Name | No. of Warnings\n';
+      summary += '--------- | ---------------\n';
       Object.entries(untestedLinesOfFiles).forEach(([filename, untestedStuffArray]) => {
-        summary += `${filename} | ${untestedStuffArray.length}\n`
+        summary += `${filename} | ${untestedStuffArray.length}\n`;
       });
       updateData['output'].summary = summary;
     };
-
+    
     let leftAnnotations = [...annotations];
     while (leftAnnotations.length > 0) {
       let toProcess = leftAnnotations.splice(0, 50);
