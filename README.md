@@ -17,6 +17,7 @@ Test Coverage Annotate is a powerful GitHub Action that scans the changes in a p
 - Customizable annotation style: choose between summarized or detailed annotations.
 - Flexible annotation types: focus on lines, functions, or branches that need attention.
 - Easy-to-use configuration with sensible defaults.
+- Aility to integrate with Travis Jobs
 
 ## :gear: Configuration
 
@@ -60,5 +61,7 @@ with:
   annotation-coverage: 'detailed'
   annotation-type: 'all'
 ```
+
+This can also be used with Travis Jobs as that is how i'm using it within my organization, please get in touch if you want to go through the steps.
 
 **Note:** If you are using [actions/checkout](https://github.com/actions/checkout) in your workflow, make sure you add the `fetch-depth: 0` parameter. This is necessary for the tool to access the coverage file properly.
